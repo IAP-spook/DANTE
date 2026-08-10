@@ -1,0 +1,33 @@
+{
+  "FEAT": [
+    "alt",
+    "f107",
+    "f107a",
+    "Ap",
+    "sinA",
+    "cosA",
+    "lat",
+    "sinLT",
+    "cosLT",
+    "sinLON",
+    "cosLON"
+  ],
+  "La": 40,
+  "Lf": 27,
+  "QS": [
+    0.05000000074505806,
+    0.25,
+    0.5,
+    0.75,
+    0.949999988079071
+  ],
+  "arch": "transformer",
+  "dm": 64,
+  "heads": 4,
+  "n_seeds": 5,
+  "anchor": "vallado_exponential",
+  "target": "log10(rho[kg/m3]) - log10(rho_exp)",
+  "recover": "rho = rho_exp * 10**q",
+  "train_cache": "arch_cache5_train_v2clean.npz (F10.7 despiked)",
+  "protocol": "30ep AdamW lr1e-3 wd1e-4 cosine pinball bs16384"
+}

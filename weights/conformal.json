@@ -1,0 +1,5 @@
+{
+  "d90": 0.025110244750976562,
+  "d50": 0.007178306579589844,
+  "note": "CQR deltas in log10-density space; interval = expo*10**(q +/- d)"
+}

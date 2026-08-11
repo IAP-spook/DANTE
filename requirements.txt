@@ -1,15 +1,9 @@
-# --- Core inference (dante/) ---
+# Core inference (all you need to run DANTE):
 torch>=2.0
 numpy>=1.21
 
-# --- Reproduction scripts (reproduce/) ---
-pandas>=1.3
-pyarrow>=8.0            # read TOLEOS / driver parquet files
-scikit-learn>=1.0      # StandardScaler in the 24-hour forecast pipeline
-matplotlib>=3.6         # paper figures (fig*.py)
-pymsis>=0.8            # NRLMSIS 2.0 empirical baseline
+# Optional extras:
+pandas>=1.3        # live driver fetching (dante.drivers / examples/02_live_nowcast.py)
+matplotlib>=3.6    # plotting in the CLI and examples
 
-# Optional:
-#   nrlmsise00          # NRLMSISE-00 baseline (only used as a climatological normalizer in Fig 2)
-#   The 'karman' helper (exponential reference atmosphere + accelerometer density utilities) is a
-#   small local package, not on PyPI; point the sys.path lines in reproduce/*.py at your copy.
+# Or install everything as a package:  pip install ".[drivers,plot]"

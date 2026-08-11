@@ -1,14 +1,25 @@
-# DANTE — deployable model card
+# DANTE — model card
 
 **What it is.** DANTE (Density via ANchored Transformer Ensemble) predicts thermospheric neutral
 mass density (kg/m³) and a calibrated uncertainty band as a continuous profile over ~225–540 km,
 from only two space-weather drivers (F10.7 and ap). This package is the headline 5-seed ensemble
-retrained on the F10.7-despiked (v2) data, with weights saved for real-time inference.
+with weights saved for real-time inference.
 
-**Accuracy (held-out test set, n=105,461).** Ensemble MAPE 13.9% overall; storm strata ~17.6 / 22.5 /
-21.7% (Dst≤−50 / Dst≤−100 / ap≥100). Better than NRLMSISE-00 (~3×) and JB2008 (~1.8×); on par with
-or better than the open ML SOTA (KML). Single-seed is ~0.5 pp worse overall but up to ~5 pp worse in
-storms, so the 5-seed ensemble is used.
+**Architecture.** A lightweight two-stream Transformer with static-query cross-attention (~35k
+parameters), anchored to the Vallado piecewise-exponential reference atmosphere. The network
+predicts the log-space anomaly `y = log10(ρ) − log10(ρ_exp)` and density is recovered as
+`ρ = ρ_exp · 10^y`; this guarantees positivity and the correct order-of-magnitude vertical
+structure. Predictions are five quantiles, ensembled over five seeds and calibrated with
+conformalized quantile regression (CQR).
+
+**Accuracy (held-out test set, n = 105,461).** Ensemble MAPE **13.9 %** overall; storm strata
+**17.6 / 22.5 / 21.7 %** (Dst ≤ −50 / Dst ≤ −100 / ap ≥ 100). About **2.5×** more accurate than
+NRLMSIS 2.0 and **1.8×** more accurate than the drag-optimised JB2008; most accurate model in every
+storm stratum. The 5-seed ensemble is ~0.5 pp better overall than a single seed, and up to ~5 pp
+better in storms.
+
+**24-hour forecast.** Driven by the real SWPC one-day-ahead F10.7/ap forecasts, DANTE retains
+**17.6 %** MAPE at 24-hour lead (22.0 % in storms), roughly 2.3× better than an empirical forecast.
 
 **Inputs (per query).**
 - static: altitude grid [km], latitude [deg], longitude [deg], local solar time [h], day-of-year,
@@ -16,30 +27,28 @@ storms, so the 5-seed ensemble is used.
 - histories: 27 daily F10.7 (solar-rotation memory) and 40 three-hourly ap (5 days).
 - Nowcast = observed histories/indices; 24-h forecast = SWPC-predicted F10.7/ap for the target day.
 
-**Output.** median density and calibrated 90% (and 50%) interval at each altitude.
+**Output.** Median density and calibrated 90 % (and 50 %) intervals at each altitude.
 
 ## Files
-- `dante_model.py` — self-contained architecture (transformer two-stream, static-query cross-attention)
-  + Vallado (2013) piecewise-exponential anchor. No karman/pipeline dependency.
-- `dante.py` — `DANTE(weights_dir).predict_profile(...)` inference API.
-- `train_export.py <seed>` — reproduces a headline seed on `arch_cache5_train_v2clean.npz` and saves weights.
-- `fit_conformal.py` — verifies the exported ensemble reproduces the headline and fits/saves the CQR calibrators.
-- `test_infer.py` — end-to-end smoke test (quiet vs storm what-if).
-- `weights/` — `seed0..4.pt` (state_dicts), `scaler.npz` (mu, sd), `config.json`, `conformal.json`.
-
-## Reproduce
-```
-python train_export.py 0   # ... through seed 4  (or run_deploy_train.sh)
-python fit_conformal.py    # verify + write conformal.json
-python test_infer.py       # smoke test
-```
+- `dante/model.py` — self-contained architecture (two-stream Transformer, static-query
+  cross-attention) + Vallado (2013) piecewise-exponential anchor. No external-pipeline dependency.
+- `dante/inference.py` — `DANTE().predict_profile(...)` inference API.
+- `dante/drivers.py` — live F10.7/ap driver fetching from the public GFZ/SWPC feeds.
+- `dante/cli.py` — the `dante-predict` command-line tool.
+- `dante/weights/` — `seed0..4.pt` (state dicts), `scaler.npz` (mu, sd), `config.json`, `conformal.json`.
 
 ## Physics anchor / target
-Target y = log10(ρ) − log10(ρ_exp); recover ρ = ρ_exp · 10^q, where ρ_exp is the Vallado
-piecewise-exponential atmosphere. This guarantees positivity and the correct order-of-magnitude
-vertical structure.
+Target `y = log10(ρ) − log10(ρ_exp)`; recover `ρ = ρ_exp · 10^y`, where `ρ_exp` is the Vallado
+piecewise-exponential atmosphere. Ablating the anchor (predicting absolute log-density directly)
+slows convergence and worsens the optimum from 13.9 % to ~19.8 % MAPE, so the anchor is essential.
 
 ## Scope & limits
-Total mass density only (no species/temperature), ~225–540 km; downward extrapolation below the
-lowest training altitudes is the weakest regime (Fig S4). Forecast-mode intervals do not yet propagate
-the SWPC driver-forecast error, so forecast-mode coverage in storms is optimistic.
+- Total mass density only (no composition or temperature), ~225–540 km. Not a full replacement for
+  NRLMSIS.
+- Downward extrapolation below the lowest training altitudes is the weakest regime.
+- The conformal guarantee is **marginal**, not conditional: the 90 % intervals are mildly
+  undercovered in the strongest storms (~84 % at Dst ≤ −100 nT).
+- In forecast mode the intervals reflect model uncertainty at the predicted drivers; they do not yet
+  propagate the SWPC driver-forecast error, so forecast-mode storm coverage is optimistic.
+- A single solar proxy (F10.7); multi-band EUV indices are not used because they are not issued as
+  operational day-ahead forecasts.

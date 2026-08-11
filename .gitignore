@@ -3,3 +3,11 @@ __pycache__/
 .DS_Store
 venv/
 *.egg-info/
+build/
+dist/
+.pytest_cache/
+# example / CLI outputs
+*.png
+demo_conditions.csv
+demo_predictions.csv
+profile.csv

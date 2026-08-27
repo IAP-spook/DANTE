@@ -5,7 +5,7 @@ mass density (kg/m³) and a calibrated uncertainty band as a continuous profile 
 from only two space-weather drivers (F10.7 and ap). This package is the headline 5-seed ensemble
 with weights saved for real-time inference.
 
-**Architecture.** A lightweight two-stream Transformer with static-query cross-attention (~35k
+**Architecture.** A lightweight two-stream Transformer with static-query cross-attention (186,405
 parameters), anchored to the Vallado piecewise-exponential reference atmosphere. The network
 predicts the log-space anomaly `y = log10(ρ) − log10(ρ_exp)` and density is recovered as
 `ρ = ρ_exp · 10^y`; this guarantees positivity and the correct order-of-magnitude vertical

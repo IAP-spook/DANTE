@@ -12,7 +12,7 @@ operationally forecast a day ahead** — the solar radio flux **F10.7** and the 
   NRLMSIS 2.0 and **1.8×** better than the drag-optimised JB2008).
 - 24-hour forecast accuracy ≈ **17.6 %**, driven by the real one-day-ahead SWPC forecasts of F10.7 and ap.
 - Every prediction carries a conformally calibrated **90 % uncertainty band**.
-- Tiny and fast: ~35k parameters, well under 10 ms on a CPU.
+- Tiny and fast: ~186k parameters (186,405), well under 10 ms on a CPU.
 
 > This repository is the **ready-to-use inference package** — the trained model and a clean API so
 > you can predict density from two drivers. It is the code accompanying the paper (Wang & Lyu).
@@ -139,12 +139,14 @@ and deterministic output).
 
 ---
 
-## Verified reproducibility
+## Provenance & tests
 
-The bundled weights are the exact headline 5-seed ensemble from the paper: running them on the
-paper's held-out test set reproduces the reported **13.9 % nowcast MAPE** (byte-identical to the
-frozen paper predictions). The self-contained `dante/` package has no dependency on the training
-pipeline or any private data.
+The bundled weights are the exact headline 5-seed ensemble reported in the paper (the Transformer
+backbone, 186,405 parameters). The held-out test set, evaluation protocol, and the reported
+**13.9 % nowcast MAPE** are described in the paper; this repository ships the trained model and a
+clean inference API, not the training/evaluation pipeline or any private data. To guard the shipped
+weights, the bundled tests pin them to a golden reference profile, so any accidental change to the
+weights or feature encoding is caught (`pytest -q`).
 
 ---
 

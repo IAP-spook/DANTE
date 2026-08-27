@@ -57,7 +57,7 @@ class DANTE:
         ``conformal.json``. Defaults to the weights bundled with the package.
     device : str, optional
         Torch device string (``"cpu"`` or e.g. ``"cuda"``). The model is tiny
-        (~35k parameters) and runs in well under 10 ms on CPU, so ``"cpu"`` is
+        (~186k parameters) and runs in well under 10 ms on CPU, so ``"cpu"`` is
         a sensible default.
     """
 

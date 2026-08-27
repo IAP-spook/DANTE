@@ -30,9 +30,12 @@ dante-predict --live --lat 0 --lon 100 --lst 14
   provisional GFZ nowcast values, refined later).
 - **24-h / multi-day forecast:** replace the target-day F10.7/Ap with `fetch_forecast_indices()`
   (SWPC 27-day outlook). The SWPC F10.7 forecast is accurate (~4 % MAE); the ap forecast is
-  unreliable in storms, so forecast-mode storm uncertainty is optimistic (see the paper).
+  unreliable in storms, so forecast-mode storm uncertainty is optimistic (see the paper). Note: the
+  paper's 24-hour benchmark used the SWPC RSGA next-day forecasts; this helper uses the
+  machine-readable 27-day outlook for convenience, so deployed forecast skill may differ slightly
+  from the paper's reported numbers.
 
 ## To productionise
 - A scheduler (cron) to refresh and cache drivers hourly.
 - Wrap `DANTE` in a small FastAPI/Flask endpoint; a front-end form (time, lat, lon, altitude range)
-  → profile plot. The model is tiny (~35k params, <10 ms CPU), so latency is trivial.
+  → profile plot. The model is tiny (~186k params, <10 ms CPU), so latency is trivial.

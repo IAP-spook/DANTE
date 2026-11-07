@@ -15,7 +15,7 @@ operationally forecast a day ahead** — the solar radio flux **F10.7** and the 
 - Tiny and fast: ~186k parameters (186,405), well under 10 ms on a CPU.
 
 > This repository is the **ready-to-use inference package** — the trained model and a clean API so
-> you can predict density from two drivers. It is the code accompanying the paper (Wang & Lyu).
+> you can predict density from two drivers. It is the code accompanying the paper by Wang, He, and Lyu (submitted).
 
 **Author / contact:** Yinan Wang (wangyinan@mail.iap.ac.cn), Institute of Atmospheric Physics,
 Chinese Academy of Sciences.
@@ -164,8 +164,8 @@ weights or feature encoding is caught (`pytest -q`).
 ## Citation
 
 ```
-Wang, Y., & Lyu, D. (2026). A physics-anchored Transformer forecasts thermospheric neutral density
-with calibrated uncertainty.
+Wang, Y., He, M. S., & Lyu, D. R. (2026). Thermospheric mass density from 225 to 540 km and its
+storm-time response inferred from the operationally forecast F10.7 and Ap indices. Manuscript submitted.
 ```
 
 ## License

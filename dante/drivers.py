@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fetch the live space-weather drivers DANTE needs, straight from the public sources.
+"""Fetch the live solar and geomagnetic drivers DANTE needs, straight from the public sources.
 
 DANTE needs only two drivers, and this module builds them in exactly the encoding the
 model was trained on:

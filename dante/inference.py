@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""DANTE inference API — turn two space-weather drivers into a calibrated density profile.
+"""DANTE inference API — turn two solar and geomagnetic drivers into a calibrated density profile.
 
 This is the one class most users need. It loads the trained 5-seed ensemble, the input
 scaler, and the conformal calibrators that ship inside the package, and exposes a single

@@ -2,7 +2,7 @@
 
 A physics-anchored, quantile-regression Transformer that predicts a continuous thermospheric
 neutral-density profile (225-540 km) with conformally calibrated uncertainty, from only the two
-operationally forecastable space-weather drivers, the solar radio flux F10.7 and the geomagnetic
+operationally forecastable solar and geomagnetic drivers, the solar radio flux F10.7 and the geomagnetic
 index ap. It runs both as a nowcast and as a genuine 24-hour forecast.
 
 Quick start

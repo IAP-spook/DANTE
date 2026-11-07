@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">=3.9"
 license = { text = "MIT" }
 authors = [{ name = "Yinan Wang", email = "wangyinan@mail.iap.ac.cn" }]
-keywords = ["thermosphere", "neutral density", "space weather", "satellite drag",
+keywords = ["thermosphere", "neutral density", "geomagnetic activity", "satellite drag",
             "machine learning", "transformer", "conformal prediction"]
 classifiers = [
     "Programming Language :: Python :: 3",

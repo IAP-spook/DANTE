@@ -2,7 +2,7 @@
 
 **What it is.** DANTE (Density via ANchored Transformer Ensemble) predicts thermospheric neutral
 mass density (kg/m³) and a calibrated uncertainty band as a continuous profile over ~225–540 km,
-from only two space-weather drivers (F10.7 and ap). This package is the headline 5-seed ensemble
+from only two solar and geomagnetic drivers (F10.7 and ap). This package is the headline 5-seed ensemble
 with weights saved for real-time inference.
 
 **Architecture.** A lightweight two-stream Transformer with static-query cross-attention (186,405

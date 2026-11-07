@@ -3,7 +3,7 @@
 **A physics-anchored Transformer that predicts thermospheric neutral density with calibrated uncertainty.**
 
 DANTE returns a continuous thermospheric mass-density profile from **225 to 540 km** with a
-conformally calibrated uncertainty band, using **only the two space-weather drivers that are
+conformally calibrated uncertainty band, using **only the two solar and geomagnetic drivers that are
 operationally forecast a day ahead** — the solar radio flux **F10.7** and the geomagnetic index
 **ap**. Because both inputs are forecastable, the same model runs as a *nowcast* and as a genuine
 *24-hour forecast*.
@@ -15,7 +15,7 @@ operationally forecast a day ahead** — the solar radio flux **F10.7** and the 
 - Tiny and fast: ~186k parameters (186,405), well under 10 ms on a CPU.
 
 > This repository is the **ready-to-use inference package** — the trained model and a clean API so
-> you can predict density from two drivers. It is the code accompanying the paper by Wang, He, and Lyu (submitted).
+> you can predict density from two drivers. It is the code accompanying the paper by Wang, He, and Lü (submitted).
 
 **Author / contact:** Yinan Wang (wangyinan@mail.iap.ac.cn), Institute of Atmospheric Physics,
 Chinese Academy of Sciences.
@@ -164,7 +164,7 @@ weights or feature encoding is caught (`pytest -q`).
 ## Citation
 
 ```
-Wang, Y., He, M. S., & Lyu, D. R. (2026). Thermospheric mass density from 225 to 540 km and its
+Wang, Y., He, M. S., & Lü, D. R. (2026). Thermospheric mass density from 225 to 540 km and its
 storm-time response inferred from the operationally forecast F10.7 and Ap indices. Manuscript submitted.
 ```
 
